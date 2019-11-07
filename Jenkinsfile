@@ -3,7 +3,6 @@ pipeline {
     environment {
       
 	    GIT_URL = "https://github.com/wujiabo/eureka.git"
-	//	GIT_CRED = "48946d03-31f8-4cee-a4ed-c138e7b900a0"
 		DOCKER_REPO="registry.cn-hangzhou.aliyuncs.com/wujiabo/sba-registry"
 		DOCKER_REG="https://registry.cn-hangzhou.aliyuncs.com"
 		DOCKER_REG_KEY = "cddee4fd-275d-4a88-9e47-f980681f9d80"
@@ -14,21 +13,20 @@ pipeline {
     
     	stage('CheckOut Code'){
          	steps{
-            //	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: GIT_CRED, url: GIT_URL]]])
             	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: GIT_URL]]])
             	}
               }
         stage('Maven Build'){
         	steps{
-        	    sh 'mvn clean install -DskipTests'
+        	    bat 'mvn clean install -DskipTests'
         	}
 
         }
-        
+
         stage('Building image') {
 	      steps{
 	        script {
-	           docker.withRegistry( DOCKER_REG, DOCKER_REG_KEY ) {dockerImage = docker.build DOCKER_REPO + ":$BUILD_NUMBER"
+	           docker.withRegistry( DOCKER_REG, DOCKER_REG_KEY ) {dockerImage = docker.build DOCKER_REPO + ":latest"
 	           }
 	        }
 	      }
@@ -42,20 +40,19 @@ pipeline {
 		        }
 		      }
 		}
-		
+
 		stage('Deploy Image to K8s') {
       steps{
         script {
-        	sh "sed -i 's/{version}/" + BUILD_NUMBER + "/g' deployment.yaml"
-	   		sh 'kubectl apply -f deployment.yaml'
+	   		bat 'kubectl apply -f deployment.yaml'
 		      }
 		}
 		}
-		
-		
+
+
 		stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $DOCKER_REPO:$BUILD_NUMBER"
+        bat "docker rmi $DOCKER_REPO:latest"
       }
     }
    }
