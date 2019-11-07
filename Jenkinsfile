@@ -2,11 +2,11 @@ pipeline {
     agent any
     environment {
       
-	    GIT_URL = "git@github.ibm.com:sba/registry.git"
-		GIT_CRED = "48946d03-31f8-4cee-a4ed-c138e7b900a0"
+	    GIT_URL = "https://github.com/wujiabo/eureka.git"
+	//	GIT_CRED = "48946d03-31f8-4cee-a4ed-c138e7b900a0"
 		DOCKER_REPO="registry.cn-hangzhou.aliyuncs.com/武佳博/sba-registry"
 		DOCKER_REG="https://registry.cn-hangzhou.aliyuncs.com"
-		DOCKER_REG_KEY = "874c3949-6135-41d1-902c-ebd184193ded"
+		DOCKER_REG_KEY = "6a8b0b3a-1734-4f6e-b0b7-b43ccbea34b7"
 		dockerImage = ''
       
     }
@@ -14,7 +14,8 @@ pipeline {
     
     	stage('CheckOut Code'){
          	steps{
-            	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: GIT_CRED, url: GIT_URL]]])
+            //	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: GIT_CRED, url: GIT_URL]]])
+            	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: GIT_URL]]])
             	}
               }
         stage('Maven Build'){
