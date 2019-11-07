@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: sba-registry
-          image: registry.cn-hangzhou.aliyuncs.com/武佳博/sba-registry:{version}
+          image: registry.cn-hangzhou.aliyuncs.com/wujiabo1985/sba-registry:{version}
           ports:
             - name: http-port
               containerPort: 10001

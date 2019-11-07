@@ -4,9 +4,9 @@ pipeline {
       
 	    GIT_URL = "https://github.com/wujiabo/eureka.git"
 	//	GIT_CRED = "48946d03-31f8-4cee-a4ed-c138e7b900a0"
-		DOCKER_REPO="registry.cn-hangzhou.aliyuncs.com/武佳博/sba-registry"
+		DOCKER_REPO="registry.cn-hangzhou.aliyuncs.com/wujiabo1985/sba-registry"
 		DOCKER_REG="https://registry.cn-hangzhou.aliyuncs.com"
-		DOCKER_REG_KEY = "6a8b0b3a-1734-4f6e-b0b7-b43ccbea34b7"
+		DOCKER_REG_KEY = "cddee4fd-275d-4a88-9e47-f980681f9d80"
 		dockerImage = ''
       
     }
