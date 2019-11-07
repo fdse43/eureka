@@ -16,11 +16,10 @@ spec:
       containers:
         - name: sba-registry
           image: registry.cn-hangzhou.aliyuncs.com/wujiabo/sba-registry:latest
+          imagePullPolicy: Never
           ports:
             - name: http-port
               containerPort: 10001
           env:
             - name: spring_profiles_active
               value: k8s
-      imagePullSecrets:
-        - name: sba
